@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="bd_saunovModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Katalog">
+    <Key>
+      <PropertyRef Name="k_id" />
+    </Key>
+    <Property Name="k_id" Type="Int32" Nullable="false" />
+    <Property Name="k_artic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="k_katalog" Type="Int32" />
+    <Property Name="k_proiz" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="k_post" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="k_skid" Type="Int32" />
+    <Property Name="k_kolvo" Type="Int32" />
+    <Property Name="k_edinica" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tovar" Relationship="Self.FK_Katalog_Tovar" FromRole="Katalog" ToRole="Tovar" />
+  </EntityType>
+  <EntityType Name="role">
+    <Key>
+      <PropertyRef Name="r_id" />
+    </Key>
+    <Property Name="r_id" Type="Int32" Nullable="false" />
+    <Property Name="role_id" Type="Int32" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_role_Users" FromRole="role" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Tovar">
+    <Key>
+      <PropertyRef Name="t_id" />
+    </Key>
+    <Property Name="t_id" Type="Int32" Nullable="false" />
+    <Property Name="t_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="t_cena" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="t_skidka" Type="Int32" />
+    <Property Name="t_opisanie" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="t_pictures" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Katalog" Relationship="Self.FK_Katalog_Tovar" FromRole="Tovar" ToRole="Katalog" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="U_Id" />
+    </Key>
+    <Property Name="U_Id" Type="Int32" Nullable="false" />
+    <Property Name="U_F" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="U_IO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="U_Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="U_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="U_Role" Type="Int32" />
+    <NavigationProperty Name="role" Relationship="Self.FK_role_Users" FromRole="Users" ToRole="role" />
+  </EntityType>
+  <Association Name="FK_Katalog_Tovar">
+    <End Role="Tovar" Type="Self.Tovar" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Katalog" Type="Self.Katalog" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Tovar">
+        <PropertyRef Name="t_id" />
+      </Principal>
+      <Dependent Role="Katalog">
+        <PropertyRef Name="k_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_role_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="role" Type="Self.role" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="U_Id" />
+      </Principal>
+      <Dependent Role="role">
+        <PropertyRef Name="r_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="bd_saunovEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Katalog" EntityType="Self.Katalog" />
+    <EntitySet Name="role" EntityType="Self.role" />
+    <EntitySet Name="Tovar" EntityType="Self.Tovar" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK_Katalog_Tovar" Association="Self.FK_Katalog_Tovar">
+      <End Role="Tovar" EntitySet="Tovar" />
+      <End Role="Katalog" EntitySet="Katalog" />
+    </AssociationSet>
+    <AssociationSet Name="FK_role_Users" Association="Self.FK_role_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="role" EntitySet="role" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

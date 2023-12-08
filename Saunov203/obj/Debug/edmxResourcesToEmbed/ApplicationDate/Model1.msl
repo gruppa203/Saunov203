@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище bd_saunovModelContainer" CdmEntityContainer="bd_saunovEntities">
+    <EntitySetMapping Name="Katalog">
+      <EntityTypeMapping TypeName="bd_saunovModel.Katalog">
+        <MappingFragment StoreEntitySet="Katalog">
+          <ScalarProperty Name="k_id" ColumnName="k_id" />
+          <ScalarProperty Name="k_artic" ColumnName="k_artic" />
+          <ScalarProperty Name="k_katalog" ColumnName="k_katalog" />
+          <ScalarProperty Name="k_proiz" ColumnName="k_proiz" />
+          <ScalarProperty Name="k_post" ColumnName="k_post" />
+          <ScalarProperty Name="k_skid" ColumnName="k_skid" />
+          <ScalarProperty Name="k_kolvo" ColumnName="k_kolvo" />
+          <ScalarProperty Name="k_edinica" ColumnName="k_edinica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="role">
+      <EntityTypeMapping TypeName="bd_saunovModel.role">
+        <MappingFragment StoreEntitySet="role">
+          <ScalarProperty Name="r_id" ColumnName="r_id" />
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tovar">
+      <EntityTypeMapping TypeName="bd_saunovModel.Tovar">
+        <MappingFragment StoreEntitySet="Tovar">
+          <ScalarProperty Name="t_id" ColumnName="t_id" />
+          <ScalarProperty Name="t_name" ColumnName="t_name" />
+          <ScalarProperty Name="t_cena" ColumnName="t_cena" />
+          <ScalarProperty Name="t_skidka" ColumnName="t_skidka" />
+          <ScalarProperty Name="t_opisanie" ColumnName="t_opisanie" />
+          <ScalarProperty Name="t_pictures" ColumnName="t_pictures" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="bd_saunovModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="U_Id" ColumnName="U_Id" />
+          <ScalarProperty Name="U_F" ColumnName="U_F" />
+          <ScalarProperty Name="U_IO" ColumnName="U_IO" />
+          <ScalarProperty Name="U_Login" ColumnName="U_Login" />
+          <ScalarProperty Name="U_Password" ColumnName="U_Password" />
+          <ScalarProperty Name="U_Role" ColumnName="U_Role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

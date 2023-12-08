@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище bd_saunovModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Katalog">
+          <Key>
+            <PropertyRef Name="k_id" />
+          </Key>
+          <Property Name="k_id" Type="int" Nullable="false" />
+          <Property Name="k_artic" Type="varchar" MaxLength="50" />
+          <Property Name="k_katalog" Type="int" />
+          <Property Name="k_proiz" Type="varchar" MaxLength="50" />
+          <Property Name="k_post" Type="varchar" MaxLength="50" />
+          <Property Name="k_skid" Type="int" />
+          <Property Name="k_kolvo" Type="int" />
+          <Property Name="k_edinica" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="r_id" />
+          </Key>
+          <Property Name="r_id" Type="int" Nullable="false" />
+          <Property Name="role_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Tovar">
+          <Key>
+            <PropertyRef Name="t_id" />
+          </Key>
+          <Property Name="t_id" Type="int" Nullable="false" />
+          <Property Name="t_name" Type="varchar" MaxLength="50" />
+          <Property Name="t_cena" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="t_skidka" Type="int" />
+          <Property Name="t_opisanie" Type="varchar" MaxLength="50" />
+          <Property Name="t_pictures" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="U_Id" />
+          </Key>
+          <Property Name="U_Id" Type="int" Nullable="false" />
+          <Property Name="U_F" Type="varchar" MaxLength="50" />
+          <Property Name="U_IO" Type="varchar" MaxLength="50" />
+          <Property Name="U_Login" Type="varchar" MaxLength="50" />
+          <Property Name="U_Password" Type="varchar" MaxLength="50" />
+          <Property Name="U_Role" Type="int" />
+        </EntityType>
+        <Association Name="FK_Katalog_Tovar">
+          <End Role="Tovar" Type="Self.Tovar" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Katalog" Type="Self.Katalog" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Tovar">
+              <PropertyRef Name="t_id" />
+            </Principal>
+            <Dependent Role="Katalog">
+              <PropertyRef Name="k_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_role_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="role" Type="Self.role" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="U_Id" />
+            </Principal>
+            <Dependent Role="role">
+              <PropertyRef Name="r_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище bd_saunovModelContainer">
+          <EntitySet Name="Katalog" EntityType="Self.Katalog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tovar" EntityType="Self.Tovar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Katalog_Tovar" Association="Self.FK_Katalog_Tovar">
+            <End Role="Tovar" EntitySet="Tovar" />
+            <End Role="Katalog" EntitySet="Katalog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_role_Users" Association="Self.FK_role_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="role" EntitySet="role" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bd_saunovModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Katalog">
+          <Key>
+            <PropertyRef Name="k_id" />
+          </Key>
+          <Property Name="k_id" Type="Int32" Nullable="false" />
+          <Property Name="k_artic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="k_katalog" Type="Int32" />
+          <Property Name="k_proiz" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="k_post" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="k_skid" Type="Int32" />
+          <Property Name="k_kolvo" Type="Int32" />
+          <Property Name="k_edinica" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tovar" Relationship="Self.FK_Katalog_Tovar" FromRole="Katalog" ToRole="Tovar" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="r_id" />
+          </Key>
+          <Property Name="r_id" Type="Int32" Nullable="false" />
+          <Property Name="role_id" Type="Int32" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_role_Users" FromRole="role" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Tovar">
+          <Key>
+            <PropertyRef Name="t_id" />
+          </Key>
+          <Property Name="t_id" Type="Int32" Nullable="false" />
+          <Property Name="t_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="t_cena" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="t_skidka" Type="Int32" />
+          <Property Name="t_opisanie" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="t_pictures" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Katalog" Relationship="Self.FK_Katalog_Tovar" FromRole="Tovar" ToRole="Katalog" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="U_Id" />
+          </Key>
+          <Property Name="U_Id" Type="Int32" Nullable="false" />
+          <Property Name="U_F" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="U_IO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="U_Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="U_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="U_Role" Type="Int32" />
+          <NavigationProperty Name="role" Relationship="Self.FK_role_Users" FromRole="Users" ToRole="role" />
+        </EntityType>
+        <Association Name="FK_Katalog_Tovar">
+          <End Role="Tovar" Type="Self.Tovar" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Katalog" Type="Self.Katalog" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Tovar">
+              <PropertyRef Name="t_id" />
+            </Principal>
+            <Dependent Role="Katalog">
+              <PropertyRef Name="k_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_role_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="role" Type="Self.role" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="U_Id" />
+            </Principal>
+            <Dependent Role="role">
+              <PropertyRef Name="r_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bd_saunovEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Katalog" EntityType="Self.Katalog" />
+          <EntitySet Name="role" EntityType="Self.role" />
+          <EntitySet Name="Tovar" EntityType="Self.Tovar" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Katalog_Tovar" Association="Self.FK_Katalog_Tovar">
+            <End Role="Tovar" EntitySet="Tovar" />
+            <End Role="Katalog" EntitySet="Katalog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_role_Users" Association="Self.FK_role_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="role" EntitySet="role" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище bd_saunovModelContainer" CdmEntityContainer="bd_saunovEntities">
+          <EntitySetMapping Name="Katalog">
+            <EntityTypeMapping TypeName="bd_saunovModel.Katalog">
+              <MappingFragment StoreEntitySet="Katalog">
+                <ScalarProperty Name="k_id" ColumnName="k_id" />
+                <ScalarProperty Name="k_artic" ColumnName="k_artic" />
+                <ScalarProperty Name="k_katalog" ColumnName="k_katalog" />
+                <ScalarProperty Name="k_proiz" ColumnName="k_proiz" />
+                <ScalarProperty Name="k_post" ColumnName="k_post" />
+                <ScalarProperty Name="k_skid" ColumnName="k_skid" />
+                <ScalarProperty Name="k_kolvo" ColumnName="k_kolvo" />
+                <ScalarProperty Name="k_edinica" ColumnName="k_edinica" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="role">
+            <EntityTypeMapping TypeName="bd_saunovModel.role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="r_id" ColumnName="r_id" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tovar">
+            <EntityTypeMapping TypeName="bd_saunovModel.Tovar">
+              <MappingFragment StoreEntitySet="Tovar">
+                <ScalarProperty Name="t_id" ColumnName="t_id" />
+                <ScalarProperty Name="t_name" ColumnName="t_name" />
+                <ScalarProperty Name="t_cena" ColumnName="t_cena" />
+                <ScalarProperty Name="t_skidka" ColumnName="t_skidka" />
+                <ScalarProperty Name="t_opisanie" ColumnName="t_opisanie" />
+                <ScalarProperty Name="t_pictures" ColumnName="t_pictures" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="bd_saunovModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="U_Id" ColumnName="U_Id" />
+                <ScalarProperty Name="U_F" ColumnName="U_F" />
+                <ScalarProperty Name="U_IO" ColumnName="U_IO" />
+                <ScalarProperty Name="U_Login" ColumnName="U_Login" />
+                <ScalarProperty Name="U_Password" ColumnName="U_Password" />
+                <ScalarProperty Name="U_Role" ColumnName="U_Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
